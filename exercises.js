@@ -154,4 +154,37 @@ const eliminarCaracteres = (texto = '', patron = '') =>
 
 eliminarCaracteres();
 eliminarCaracteres('xyz1, xyz2, xyz3, xyz4 y xyz5', 'xyz')
-eliminarCaracteres('Eu minim cillum esse ullamco pariatur Lorem ea minim sit laborum do consectetur magna. Consequat est culpa culpa dolor laborum commodo occaecat aliqua quis cillum nostrud ea. Nisi tempor qui culpa ipsum consectetur fugiat amet velit adipisicing Lorem irure Lorem. Anim elit quis Lorem incididunt.', '[a-j]')
+
+// 9) Programa una función que obtenga un numero aleatorio entre 501 y 600.
+
+// PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE 
+
+// 10) Programa una función que reciba un número y evalúe si es capicúa o no (que se lee igual en un sentido que en otro), pe. miFuncion(2002) devolverá true.
+
+const capicua = (numero = undefined) => {
+    if (!numero) return console.warn('No escribiste un número');
+
+    numero = String(numero);
+    let reverso = numero.split('').reverse().join('');
+    (numero === reverso)
+        ? console.info(`El número Sí es capicúa. Número original: ${numero}. Numero al revés: ${reverso}.`)
+        : console.info(`El número No es capicúa. Número original: ${numero}. Numero al revés: ${reverso}.`)
+}
+
+capicua(123321);
+
+// 11) Programa una función que calcule el factorial de un número (El factorial de un entero positivo n, se define como el producto de todos los números enteros positivos desde 1 hasta n), pe. miFuncion(5) devolverá 120.
+// Uso de loop for y método .reduce()
+const factorial = (numero = undefined) => {
+    if (!numero) return console.warn('No introduciste un número.')
+    let arreglo = [];
+    for (let i = numero; i >= 1; i--) {
+        arreglo.push(i)
+    }
+    console.log(arreglo)
+    arreglo = arreglo.reduce((acc, el) => acc * el, 1)
+
+    console.log(arreglo);
+}
+
+factorial(4);
