@@ -198,3 +198,74 @@ const factorial = (numero = undefined) => {
 }
 
 factorial(4);
+
+
+// 12) Programa una función que determine si un número es primo (aquel que solo es divisible por sí mismo y 1) o no, pe. miFuncion(7) devolverá true.
+
+const numeroPrimo = (numero = undefined) => {
+    if (numero === undefined) return console.warn('No ingresaste un número.');
+    if (typeof numero !== 'number') return console.error('El valor ingresado NO es del tipo número.');
+    if (numero === 0) return console.error('El número no puede ser 0.');
+    if (numero === 1) return console.error('El número no puede ser 1.')
+    if (Math.sign(numero) === -1) return console.error('el número no puede ser negativo.');
+
+    //Usamos for. antes creamos una variable validadora inicializada en false.
+    let divisible = false;
+    for (let i = 2; i < numero; i++) {
+        if ((numero%i) === 0) {
+            divisible = true;
+            // Usamos break para dejar detener el ciclo.
+            break;
+        }
+    }
+
+    return (divisible)
+        ? console.log(`El número ${numero} NO es primo.`)
+        : console.log(`El número ${numero} SÍ es primo.`);
+}
+
+numeroPrimo();
+numeroPrimo('320');
+numeroPrimo(true);
+numeroPrimo(0);
+numeroPrimo(1);
+numeroPrimo(-13);
+numeroPrimo(13);
+numeroPrimo(200);
+
+// 13) Programa una función que determine si un número es par o impar, pe. miFuncion(29) devolverá Impar.
+
+const numeroParImpar = (numero = undefined) => {
+    if (numero === undefined) return console.warn('No ingresaste un número.');
+    if (typeof numero !== 'number') return console.error('El valor ingresado NO es del tipo número.');
+
+    return ((numero%2) === 0)
+        ? console.info(`El número ${numero} es Par.`)
+        : console.info(`El número ${numero} es Impar.`)
+}
+
+numeroParImpar();
+numeroParImpar('23');
+numeroParImpar(-398);
+numeroParImpar(19);
+
+// 14) Programa una función para convertir grados Celsius a Fahrenheit y viceversa, pe. miFuncion(0,"C") devolverá 32°F.
+
+const temperatura = (temp = undefined, grado = '') => {
+    if (!temp) return console.warn('No introduciste la temperatura a convertir.');
+    if (!grado) return console.warn('No introduciste la escala de grados.');
+    if (typeof temp !== 'number') return console.error('La temperatura debe ser un número.');
+    if (grado !== 'c' && grado !== 'f') return console.error('Solo puedes convertir a grados Celcius (c) o grados Fahrenheit (f)')
+
+    return (grado === 'c')
+        ? console.info(`La temperatura es de ${temp + 32}° Fahrenheit.`)
+        : console.info(`La temperatura es de ${temp - 32}° Celcius`)
+}
+
+temperatura(12, '')
+temperatura(26, 'c')
+temperatura(79, 'f');
+
+
+
+
