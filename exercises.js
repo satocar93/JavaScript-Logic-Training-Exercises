@@ -356,5 +356,98 @@ calcularAnios(new Date(2084, 4, 23));
 calcularAnios(new Date(1993, 7, 3));
 
 
+// 18) Programa una función que dada una cadena de texto cuente el número de vocales y consonantes, pe. miFuncion("Hola Mundo") devuelva Vocales: 4, Consonantes: 5.
+
+const contarLetras = (cadena = '') => {
+    if (!cadena) return console.warn('No ingresaste una cadena de texto.');
+    if (typeof cadena !== 'string') return console.error(`El valor ${cadena} ingresado No es del tipo texto.`);
+    // Crear dos variables contadoras. una para vocales y otra para consonantes.
+    let vocales = 0,
+        consonantes = 0;
+    // convervir todo a minusculas para hacer más sencilla la validación con expresiones regulares.
+    cadena = cadena.toLowerCase();
+    // for of --> permite iterar sobre un elemento iterable (cadenas de texto y arreglos.).
+    for (const letra of cadena) {
+        if (/[aeiouáéíóúü]/.test(letra)) vocales ++; 
+        if (/[bcdfghjklmnñpqrstvwxyz]/.test(letra)) consonantes ++; 
+
+    }
+    // retornar un objeto.
+    return console.info({
+        cadena: cadena,
+        vocales: vocales,
+        consonantes: consonantes
+    })
+}
+
+contarLetras();
+contarLetras(3);
+contarLetras('Hola Mundo');
+contarLetras('Ñoño');
+
+// 19) Programa una función que valide que un texto sea un nombre válido, pe. miFuncion("Jonathan MirCha") devolverá verdadero.
+
+// En esta función se espera recibir caracteres, caracteres especiales y espaciós vacíos.
+// la expresión regular tendrá que validar letras y espacios en blanco.
+// ^ --> 'No puede haber nada antes de esta expresión'.
+// $ -->  'No puede haber nada después de esta expresión'.
+// [] --> Agrupadores.
+// + --> Evalúa cada caracter de la cadena de texto.
+// Dentro de los corchetes se ponen: Alfabeto mayús y minús, vocales acentuadas mayús y minús. eñes y u con diéresis, espacios en blanco (\s).
+const validarNombre = (nombre = '') => {
+    if (!nombre) return console.warn('No ingresaste un nombre.');
+    if (typeof nombre !== 'string') return console.error(`El valor ${nombre} ingresado NO es de tipo texto.`);
+    
+    let expReg = /^[A-Za-zÑnÁáÉéÍíÓóÚúÜú\s]+$/g.test(nombre);
+
+    return (expReg)
+        ? console.info(`'${nombre}', es un nombre válido`)
+        : console.info(`'${nombre}', NO es un nombre válido`);
+}
+
+validarNombre();
+validarNombre(3);
+validarNombre('Santiago Torres Carvajal');
+
+// 20) Programa una función que valide que un texto sea un email válido, pe. miFuncion("jonmircha@gmail.com") devolverá verdadero.
+
+const validarEmail = (email = '') => {
+    if (!email) return console.warn('No ingresaste un E-mail.');
+    if (typeof email !== 'string') return console.error(`El valor ${email} ingresado NO es de tipo texto.`);
+    // expresión regular para validar un e-mail
+    let expReg = /[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})/i.test(email);
+
+    return (expReg)
+        ? console.info(`'${email}', es un E-mail válido`)
+        : console.info(`'${email}', NO es un E-mail válido`);
+}
+
+validarEmail();
+validarEmail(34);
+validarEmail('jon,mir,cha@gmail');
+validarEmail('jonmircha@gmail.com');
+
+// 20.1) Validación de nombre y correo en una sola función.
+
+const validarPatron = (cadena = '', patron= undefined) => {
+    if (!cadena) return console.warn('No ingresaste la información a evaluar.');
+    if (typeof cadena !== 'string') return console.error(`El valor ${cadena} ingresado NO es de tipo texto.`);
+    if (patron === undefined) return console.warn('No ingresaste el patron a identificar.');
+    if (!(patron instanceof RegExp)) return console.error(`El valor ${patron} ingresado NO es una expresión regular.`);
+    // expresión regular para validar un e-mail
+    let expReg = patron.test(cadena);
+
+    return (expReg)
+        ? console.info(`'${cadena}' SI cumple con el patrón de ingresado.`)
+        : console.info(`'${cadena}' NO cumple con el patrón ingresado`);
+}
 
 
+validarPatron();
+validarPatron({});
+validarPatron('Hola');
+validarPatron('Hola', 'esto no es un patrón');
+validarPatron('Hola', [1, 2, 3]);
+validarPatron('Santiago Torres19', /^[A-Za-zÑnÁáÉéÍíÓóÚúÜú\s]+$/g);
+validarPatron('Santiago Torres', /^[A-Za-zÑnÁáÉéÍíÓóÚúÜú\s]+$/g);
+validarPatron('santiago.torres@correounivalle.edu.co', /[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})/i);
