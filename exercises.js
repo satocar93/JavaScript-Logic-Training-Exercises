@@ -266,6 +266,95 @@ temperatura(12, '')
 temperatura(26, 'c')
 temperatura(79, 'f');
 
+// 15) Programa una función para convertir números de base binaria a decimal y viceversa, pe. miFuncion(100,2) devolverá 4 base 10.
+
+// Uso de parseInt(). Primer parámetro: número o número en string.
+//                    Segundo parámetro: base a convertir.
+// Uso de .toString(). El parámetro que recibe es la base a convertir.
+const convertirBinarioDecimal = (numero = undefined, base = undefined) => {
+    if (numero === undefined) return console.warn('No ingresaste el número a convertir');
+    if (typeof numero !== 'number') return console.error(`El valor ${numero} ingresado no es del tipo número`);
+    if (base === undefined) return console.warn('No ingresaste la base a convertir.');
+    if (typeof base !== 'number') return console.error(`El valor ${base} ingresado no es del tipo número.`);
+
+    if (base === 2) {
+        return console.info(`${numero} base ${base} = ${parseInt(numero, base)} base 10`);
+    } else if (base === 10) {
+        return console.info(`${numero} base ${base} = ${(numero.toString(2))} base 2`);
+    } else {
+        return console.error('El tipo de base a convertir NO es válido.')
+    }
+}
+convertirBinarioDecimal();
+convertirBinarioDecimal('2');
+convertirBinarioDecimal(100, );
+convertirBinarioDecimal(100, '2');
+convertirBinarioDecimal(100, 2);
+convertirBinarioDecimal(1110010, 2);
+convertirBinarioDecimal(4, 10);
+convertirBinarioDecimal(114, 10);
+
+// 16) Programa una función que devuelva el monto final después de aplicar un descuento a una cantidad dada, pe. miFuncion(1000, 20) devolverá 800.
+
+const aplicarDescuento = (monto = undefined, descuento = 0) => {
+    if (monto === undefined) return console.warn('no ingresaste el monto');
+    if (typeof monto !== 'number') return console.warn(`El valor ${monto} ingresado No es del tipo número`);
+    if (monto === 0) return console.error('El monto no puede ser 0');
+    if (Math.sign(monto) === -1) return console.error('El monto no puede ser negativo');
+    if (typeof descuento !== 'number') return console.error(`El valor ${descuento} ingresado No es del tipo número.`)
+    if (Math.sign(descuento) === -1) return console.error('El descuento no puede ser negativo.')
+
+    return console.info(`$${monto} - ${descuento}% = $${monto - ((monto * descuento) / 100)}`);
+}
+
+
+aplicarDescuento();
+aplicarDescuento('200');
+aplicarDescuento(0);
+aplicarDescuento(-1000)
+aplicarDescuento(1000, '20');
+aplicarDescuento(1000, -20);
+aplicarDescuento(1000);
+aplicarDescuento(1000, 25);
+
+// 17) Programa una función que dada una fecha válida determine cuantos años han pasado hasta el día de hoy, pe. miFuncion(new Date(1984,4,23)) devolverá 35 años (en 2020).
+
+// En el formato time stamp, que es los milisegundos desde el primero d enero de 1970 hasta hoy. 
+// Se deben convertir ambas fechas a formato time stamp, se hacen las operaciones necesarias del caso y se convierte el resultado a la unidad de tiempo necesario, considerando que JavaScript toma el tiempo basado en milisegundos.
+
+// como los meses se guardan en un arreglo, los meses están indexados desde cero. Si mayo es el mes cinco, se queda guardado en la posición 4. 
+
+// para JavaScript {}, [], new Date(), y muchas cosas son tipo objeto.
+// para validar el tipo de objeto usaremos el operador 'instance of'
+// ejemplo ---> [] instanceof Array // output: true
+// en este caso ---> if (!fecha instanceof Date) quiere decir 'Si fecha NO es instancia del prototipo Date'
+
+// Para obtener la fecha actual, sacamos una nueva instancia de Date(). Esto devuelve la fecha actual.
+// El método para convertir ese tiempo en stamp es newDate().getTime.(). A ese valor le restamos los milisegundos de la fecha dada.
+const calcularAnios = (fecha = undefined) => {
+    if (fecha === undefined) return console.warn('No ingresaste la fecha.');
+    if (!(fecha instanceof Date)) return console.error('El valor que ingreasaste NO es una fecha valida.')
+
+    let hoyMenosFecha = new Date().getTime() - fecha.getTime();
+    // milisegundos que transcurren en un año.
+    let aniosEnMS = 1000 * 60 * 60 * 24 * 365 ;
+    let aniosHumanos = Math.floor(hoyMenosFecha / aniosEnMS);
+
+    return (Math.sign(aniosHumanos) === -1)
+        ? console.info(`Faltan ${Math.abs(aniosHumanos)} años para el ${fecha.getFullYear()}.`)
+        : (Math.sign(aniosHumanos) === 1)
+            ? console.info(`Han pasado ${aniosHumanos} años, desde ${fecha.getFullYear()}.`)
+            : console.info(`Estamos en el año actual ${fecha.getFullYear()}.`)
+}
+
+calcularAnios();
+calcularAnios({});
+calcularAnios(new Date());
+calcularAnios(new Date(1984, 4, 23));
+calcularAnios(new Date(1884, 4, 23));
+calcularAnios(new Date(2084, 4, 23));
+calcularAnios(new Date(1993, 7, 3));
+
 
 
 
