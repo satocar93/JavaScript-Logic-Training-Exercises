@@ -451,3 +451,82 @@ validarPatron('Hola', [1, 2, 3]);
 validarPatron('Santiago Torres19', /^[A-Za-zÑnÁáÉéÍíÓóÚúÜú\s]+$/g);
 validarPatron('Santiago Torres', /^[A-Za-zÑnÁáÉéÍíÓóÚúÜú\s]+$/g);
 validarPatron('santiago.torres@correounivalle.edu.co', /[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})/i);
+
+// 21) Programa una función que dado un array numérico devuelve otro array con los números elevados al cuadrado, pe. mi_funcion([1, 4, 5]) devolverá [1, 16, 25].
+
+// Uso de Array.map()
+const devolverCuadrados = (arr = undefined) => {
+    if (arr === undefined) return console.warn('No ingresaste un arreglo de números.');
+    if (!(arr instanceof Array)) return console.error('El valor que ingresaste no es del tipo Arreglo');
+    // Manejo de error si arreglo está vacío:
+    if (arr.length === 0) return console.error('El arreglo está vacío.');
+    // Validación de que cada elemento del arreglo es un número: uso de for of
+    for (let num of arr) {
+        if(typeof num !== 'number') return console.error(`El valor ${num} ingresado NO es un número.`);
+    }
+
+    // el: 'elemento'
+    const newArr = arr.map(el => el * el);
+
+    return console.info(`Arreglo original: ${arr}.\nArreglo elevado al cuadrado: ${newArr}.`);
+}
+
+devolverCuadrados();
+devolverCuadrados(true);
+devolverCuadrados({});
+devolverCuadrados([]);
+devolverCuadrados([1, '3', 4, {}]);
+devolverCuadrados([1, 3, {}]);
+devolverCuadrados([1, 4, 8]);
+
+// 22) Programa una función que dado un array devuelva el número mas alto y el más bajo de dicho array, pe. miFuncion([1, 4, 5, 99, -60]) devolverá [99, -60].
+
+// Mismas validaciones de errores
+
+// Uso de los métodos min y max del objeto Math. max() y min() reciben como parámetros arreglos con spread operator.
+const arrayMinMax = (arr = undefined) => {
+    if (arr === undefined) return console.warn('No ingresaste un arreglo de números.');
+    if (!(arr instanceof Array)) return console.error('El valor que ingresaste no es del tipo Arreglo');
+    // Manejo de error si arregloe está vacío:
+    if (arr.length === 0) return console.error('El arreglo está vacío.');
+    // Validación de que cada elemento del arreglo es un número: uso de for of
+    for (let num of arr) {
+        if(typeof num !== 'number') return console.error(`El valor ${num} ingresado NO es un número.`);
+    }
+
+    return console.info(`Arreglo original: ${arr}\nValor mayor: ${Math.max(...arr)}\nValor menor: ${Math.min(...arr)}`);
+}
+
+arrayMinMax();
+arrayMinMax(false);
+arrayMinMax([]);
+arrayMinMax([2, 3, true]);
+arrayMinMax([1, 2, 5, 99, -60]);
+
+
+// 23) Programa una función que dado un array de números devuelva un objeto con 2 arreglos en el primero almacena los números pares y en el segundo los impares, pe. miFuncion([1,2,3,4,5,6,7,8,9,0]) devolverá {pares: [2,4,6,8,0], impares: [1,3,5,7,9]}.
+
+// Mismas validaciones de errores. uso de Array.filter()
+// Los datos se retornaran en un objeto para simplificar.
+const separarParesImpares = (arr = undefined) => {
+    if (arr === undefined) return console.warn('No ingresaste un arreglo de números.');
+    if (!(arr instanceof Array)) return console.error('El valor que ingresaste no es del tipo Arreglo');
+    // Manejo de error si arregloe está vacío:
+    if (arr.length === 0) return console.error('El arreglo está vacío.');
+    // Validación de que cada elemento del arreglo es un número: uso de for of
+    for (let num of arr) {
+        if(typeof num !== 'number') return console.error(`El valor ${num} ingresado NO es un número.`);
+    }
+
+    return console.info({
+        Pares: arr.filter(num => num % 2 === 0),
+        Impares: arr.filter(num => num % 2 === 1)
+    })
+}
+
+separarParesImpares();
+separarParesImpares('hola');
+separarParesImpares([]);
+separarParesImpares([2, 4, 'j']);
+separarParesImpares([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+
