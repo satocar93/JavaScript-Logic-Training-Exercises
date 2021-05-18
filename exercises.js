@@ -629,3 +629,191 @@ promedio([]);
 promedio([2, true]);
 promedio([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
 
+/* 
+27) Programa una clase llamada Pelicula.
+
+La clase recibirá un objeto al momento de instanciarse con los siguentes datos: id de la película en IMDB, titulo, director, año de estreno, país o países de origen, géneros y calificación en IMBD.
+  - Todos los datos del objeto son obligatorios.
+  - Valida que el id IMDB tenga 9 caracteres, los primeros 2 sean letras y los 
+     7 restantes números.
+  - Valida que el título no rebase los 100 caracteres.
+  - Valida que el director no rebase los 50 caracteres.
+  - Valida que el año de estreno sea un número entero de 4 dígitos.
+  - Valida que el país o paises sea introducidos en forma de arreglo.
+  - Valida que los géneros sean introducidos en forma de arreglo.
+  - Valida que los géneros introducidos esten dentro de los géneros 
+     aceptados*.
+  - Crea un método estático que devuelva los géneros aceptados*.
+  - Valida que la calificación sea un número entre 0 y 10 pudiendo ser 
+    decimal de una posición.
+  - Crea un método que devuelva toda la ficha técnica de la película.
+  - Apartir de un arreglo con la información de 3 películas genera 3 
+    instancias de la clase de forma automatizada e imprime la ficha técnica 
+    de cada película.
+
+* Géneros Aceptados: Action, Adult, Adventure, Animation, Biography, Comedy, Crime, Documentary ,Drama, Family, Fantasy, Film Noir, Game-Show, History, Horror, Musical, Music, Mystery, News, Reality-TV, Romance, Sci-Fi, Short, Sport, Talk-Show, Thriller, War, Western.
+*/
+
+// Conviene tener un método que valide que el input no sea vacío y que sea cadena de texto e invocar este método en la validación individual de cada requerimiento.
+
+class Pelicula {
+    // En el mismo constructor pasamos de forma desestructurada cada una de las posicións que va a tener el objeto.
+    constructor({id, titulo, director, estreno, pais, generos, calificacion}) {
+        // Determinamos las propiedades de la clase.
+        this.id = id;
+        this.titulo = titulo;
+        this.director = director;
+        this.estrno = estreno;
+        this.pais = pais;
+        this.generos = generos;
+        this.calificacion = calificacion;
+        //Ejecución de métodos:
+        this.validarIMDB(id);
+        this.validarTitulo(titulo);
+        this.validarDirector(director);
+        this.validarEstreno(estreno);
+        this.validarPais(pais);
+        this.validarGeneros(generos);
+        this.validarCalificacion(calificacion);
+    }
+    // --------------------Métodos Estáticos--------------------
+    // Atributo estático
+    static get listaGeneros () {
+        return ['Action', 'Adult', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'Film Noir', 'Game-Show', 'History', 'Horror', 'Musical', 'Music', 'Mistery', 'News', 'Reality - TV', 'Romance', 'Sci - Fi', 'Short', 'Sport', 'Talk-Show', 'Thriller', 'War', 'Western',];
+    }
+    // Método estático
+    static generosAceptados() {
+        return console.info(`Los géneros aceptados son: ${Pelicula.listaGeneros.join(', ')}`);
+    }
+    // --------------------Validaciones Genéricas--------------------
+    //Creamos un método genérico que permita validar cadenas de texto:
+    validarCadenas(propiedad, valor) {
+        if (!valor) return console.warn(`${propiedad} '${valor}' está vacío.`);
+        if (typeof valor !== 'string') return console.error(`${propiedad} '${valor}' ingresado, NO es una cadena de texto.`);
+
+        return true;
+    }
+    // Creamos un método genérico que valide que una cadena de texto tenga una longitud dada.
+    validarLongitudCadena(propiedad, valor, longitud) {
+        if (valor.length > longitud) return console.error(`${propiedad} '${valor}' excede el número de caracteres permitidos (${longitud})`);
+
+        return true;
+    }
+    // Creamos un método genérico que valide que un dato sea de tipo número.
+    validarNumero(propiedad, valor) {
+        if (!valor) return console.warn(`${propiedad} '${valor}' está vacío.`);
+        if (typeof valor !== 'number') console.error(`${propiedad} '${valor}' ingresado, NO es un número.`);
+
+        return true;
+    }
+    // Creamos un método genérico que valide un arreglo y que todos sus elementos sean string.
+    validarArreglo(propiedad, valor) {
+        if (!valor) return console.warn(`${propiedad} '${valor}' está vacío.`);
+        if (!(valor instanceof Array)) return console.error(`${propiedad} '${valor}' ingresado, NO es un arreglo.`);
+        if (valor.length === 0) return console.error(`${propiedad} '${valor}' no tiene datos.`);
+
+        for (let cadena of valor) {
+            if (typeof cadena !== 'string') return console.error(`El valor '${cadena}' ingresado NO es una cadena de texto.`);
+        }
+        
+        return true;
+    }
+
+
+    // --------------------Validaciones Específicas--------------------
+    // Creamos un método que valide una expresion regular para el id de IMDb.
+    validarIMDB(id) {
+        if (this.validarCadenas('IMDB id', id)) 
+            if (!(/^([a-z]){2}([0-9]){7}$/.test(id))) 
+                return console.error(`IMDB Id '${id}' no es válido. Debe tener 9 caracteres, los dos primeros letras minúsculas y los 7 restantes números.`);
+    }
+    // Creamos un método que valide la longitud del título de la película.
+    validarTitulo(titulo) {
+        if (this.validarCadenas('Título', titulo)) 
+            this.validarLongitudCadena('Titulo', titulo, 100);
+    }
+    // Creamos un método que valide la longitud del director de la película.
+    validarDirector(director) {
+        if (this.validarCadenas('Director', director)) 
+            this.validarLongitudCadena('Director', director, 50);
+    }
+    // Creamos un método que valide la longitud del número de año de estreno de la película.
+    validarEstreno(estreno) {
+        if (this.validarNumero('Año de Estreno', estreno)) 
+            if (!(/^([0-9]){4}$/.test(estreno))) 
+                return console.error(`Año de Estreno '${estreno}' no es válido. Debe ser un número de 4 dígitos.`);
+    }
+
+    // Creamos un método que valide el país o los países de la película.
+    validarPais(pais) {
+        this.validarArreglo('País', pais);
+    }
+    // Creamos un método que valide que los géneros sean introducidos en forma de arreglo.
+    validarGeneros(generos) {
+        if (this.validarArreglo('Géneros', generos)) {
+            for (let genero of generos) {
+                if (!Pelicula.listaGeneros.includes(genero)) {
+                    console.error(`Genero(s) incorrectos '${generos.join(', ')}.'`);
+                    Pelicula.generosAceptados();
+                }
+            }
+        }
+    }
+    // Creamos un método que valide como debe ser el número de calificación.
+    validarCalificacion(calificacion) {
+        if (this.validarNumero('Calificación', calificacion))
+            return (calificacion < 0 || calificacion > 10)
+                ? console.error('La calificación tiene que estar en un rango entre 0 y 10.')
+                : this.calificacion = calificacion.toFixed(1);
+    }
+    // Creamos un método que imprima una ficha técnica de la película.
+    fichaTecnica() {
+        console.info(`Ficha Técnica:\nTítulo: '${this.titulo}'\nDirector: ${this.director}\nAño: ${this.estreno}\nPaís: ${this.pais.join('-')}\nGéneros: ${this.generos.join(', ')}\nCalificación: ${this.calificacion}\nIMDb Id: ${this.id}`)
+    }
+}
+const peli = new Pelicula({
+    id: 'tt1234567',
+    titulo: 'Título de la Peli',
+    director: 'Director de la Peli',
+    estreno: 2021,
+    pais: ['Colombia'],
+    generos: ['Comedy', 'Sport'],
+    calificacion: 7.789
+})
+
+peli.fichaTecnica()
+
+const misPelis = [
+    {
+        id: 'tt0000000',
+        titulo: 'Avengers Endgame',
+        director: 'Joe Russo',
+        estreno: 2019,
+        pais: ['USA'],
+        generos: ['Action'],
+        calificacion: 9.0
+    }, 
+    {
+        id: 'tt1234567',
+        titulo: 'The Dark Knight',
+        director: 'Christopher Nolan',
+        estreno: 2008,
+        pais: ['USA', 'UK'],
+        generos: ['Action', 'Crime', 'Drama'],
+        calificacion: 9.0
+    }, 
+    {
+        id: 'tt0758758',
+        titulo: 'Into the Wild',
+        director: 'Sean Penn',
+        estreno: 2007,
+        pais: ['USA'],
+        generos: ['Adventure', 'Biography', 'Drama'],
+        calificacion: 8.1
+    },
+]
+
+misPelis.forEach(el => new Pelicula(el).fichaTecnica());
+
+
+
