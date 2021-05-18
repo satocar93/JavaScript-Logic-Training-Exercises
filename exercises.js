@@ -530,3 +530,102 @@ separarParesImpares([]);
 separarParesImpares([2, 4, 'j']);
 separarParesImpares([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
 
+// 24) Programa una función que dado un arreglo de números devuelva un objeto con dos arreglos, el primero tendrá los numeros ordenados en forma ascendente y el segundo de forma descendiente, pe. miFuncion([7, 5,7,8,6]) devolverá { asc: [5,6,7,7,8], desc: [8,7,7,6,5] }.
+
+const ordenarArreglo = (arr = undefined) => {
+    if (arr === undefined) return console.warn('No ingresaste un arreglo de números.');
+    if (!(arr instanceof Array)) return console.error('El valor que ingresaste no es del tipo Arreglo');
+    // Manejo de error si arregloe está vacío:
+    if (arr.length === 0) return console.error('El arreglo está vacío.');
+    // Validación de que cada elemento del arreglo es un número: uso de for of
+    for (let num of arr) {
+        if(typeof num !== 'number') return console.error(`El valor ${num} ingresado NO es un número.`);
+    }
+    // Nos piden retornar un objeto.
+    // asc --> ordenamiento Ascendente. desc --> ordenamiento Descendiente.
+    return console.info({
+        arr,
+        asc: arr.map(el => el).sort(),
+        desc: arr.map(el => el).sort().reverse()
+    });
+}
+
+ordenarArreglo();
+ordenarArreglo('HOla');
+ordenarArreglo([]);
+ordenarArreglo([1, 2,'t']);
+ordenarArreglo([7, 5, 7, 8, 6]);
+
+// 25) Programa una función que dado un arreglo de elementos, elimine los duplicados, pe. miFuncion(["x", 10, "x", 2, "10", 10, true, true]) devolverá ["x", 10, 2, "10", true].
+
+//Solución 1: con filter.
+const quitarDuplicados = (arr = undefined) => {
+    if (arr === undefined) return console.warn('No ingresaste un arreglo de números.');
+    if (!(arr instanceof Array)) return console.error('El valor que ingresaste no es del tipo Arreglo');
+    // Manejo de error si arregloe está vacío:
+    if (arr.length === 0) return console.error('El arreglo está vacío.');
+    // El arreglod debe tener dos o más elementos para que se presenten elementos duplicados.
+    if (arr.length === 1) return console.error('El arreglo debe tener al menos 2 elementos.');
+// NOs piden retornar un objeto.
+    return console.info({
+        original: arr,
+        sinDuplicaros: arr.filter((value, index, self) => self.indexOf(value) === index)
+    })
+}
+
+quitarDuplicados();
+quitarDuplicados({});
+quitarDuplicados([]);
+quitarDuplicados([1]);
+quitarDuplicados(['x', 10, 'x', 2, '10', 10, true, true]);
+
+// Solución 2: con set --> genera un objeto en el cual no se permitan elementos duplicados.
+const quitarDuplicados2 = (arr = undefined) => {
+    if (arr === undefined) return console.warn('No ingresaste un arreglo de números.');
+    if (!(arr instanceof Array)) return console.error('El valor que ingresaste no es del tipo Arreglo');
+    // Manejo de error si arregloe está vacío:
+    if (arr.length === 0) return console.error('El arreglo está vacío.');
+    // El arreglod debe tener dos o más elementos para que se presenten elementos duplicados.
+    if (arr.length === 1) return console.error('El arreglo debe tener al menos 2 elementos.');
+// NOs piden retornar un objeto.
+console.info({
+    original: arr,
+    // Crear una nueva instancia del objeto Set. Set recibe como parámetro un elemento iterable.
+    sinDuplicados: [...new Set(arr)]
+})    
+}
+
+quitarDuplicados2(['x', 10, 'x', 2, '10', 10, true, true])
+
+// 26) Programa una función que dado un arreglo de números obtenga el promedio, pe. promedio([9,8,7,6,5,4,3,2,1,0]) devolverá 4.5.
+
+//Uso de .reduce()
+const promedio = (arr = undefined) => {
+    if (arr === undefined) return console.warn('No ingresaste un arreglo de números.');
+    if (!(arr instanceof Array)) return console.error('El valor que ingresaste no es del tipo Arreglo');
+    // Manejo de error si arregloe está vacío:
+    if (arr.length === 0) return console.error('El arreglo está vacío.');
+    // Validación de que cada elemento del arreglo es un número: uso de for of
+    for (let num of arr) {
+        if(typeof num !== 'number') return console.error(`El valor ${num} ingresado NO es un número.`);
+    }
+    // .reduce() recibe una función que recibe tres parámetros: acumulador, elemento actual, posición del elemento y por ultimo el arreglo como tal.
+    return console.info(
+        arr.reduce((total, num, index, arr) => {
+            total += num;
+            // Hay que validar cuando se va a acabar. El valor del indice del elemento de iteración actual debe ser igual al valor del último elemento en el arreglo:
+            if (index ===arr.length - 1) {
+                return `El promedio de ${arr.join(' + ')} es ${total / arr.length}`;
+            } {
+                return total;
+            }
+        })
+    );
+}
+
+promedio();
+promedio({});
+promedio([]);
+promedio([2, true]);
+promedio([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+
